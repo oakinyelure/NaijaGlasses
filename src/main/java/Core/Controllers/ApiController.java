@@ -1,4 +1,10 @@
 package Core.Controllers;
 
-public class ApiController {
+import Core.JsonSerializer;
+
+public abstract class ApiController {
+
+    public Object Ok(Object response) {
+        return JsonSerializer.toJson(response);
+    }
 }
