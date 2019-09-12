@@ -11,7 +11,7 @@ public class Entry {
         if(portNumber != null) {
             port(Integer.parseInt(portNumber));
         }
-        Route.render();
+        Route.resolve();
 
         awaitInitialization();
     }

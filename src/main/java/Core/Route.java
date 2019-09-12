@@ -17,7 +17,7 @@ public class Route {
      *     }
      * })
      */
-    public static void render() {
+    public static void resolve() {
         get("/test", (request, response) -> {
            return JsonSerializer.toJson(new Route());
         });
