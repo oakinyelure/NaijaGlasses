@@ -1,10 +1,10 @@
 package Core.Controllers;
+import spark.Response;
+import spark.Request;
 
-import Core.JsonSerializer;
+public abstract class ApiController<T> {
 
-public abstract class ApiController {
+    public Response response;
 
-    public Object Ok(Object response) {
-        return JsonSerializer.toJson(response);
-    }
+    public Request request;
 }
