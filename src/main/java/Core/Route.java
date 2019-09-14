@@ -1,8 +1,13 @@
 package Core;
 
+import Core.Controllers.SearchController;
+import Core.Libraries.Controller.ControllerResolver;
+
 import static spark.Spark.*;
 
 public class Route {
+
+    public static ControllerResolver resolver = new ControllerResolver();
     /**
      * Keep all routes here. Do not provide implementation
      * details in the route itself. The route should call its own implementation details rather than
@@ -19,7 +24,8 @@ public class Route {
      */
     public static void resolve() {
         get("/test", (request, response) -> {
-           return JsonSerializer.toJson(new Route());
+            return Route.resolver.find("SearchController")
+                    .invoke("Search",request,response);
         });
     }
 }
