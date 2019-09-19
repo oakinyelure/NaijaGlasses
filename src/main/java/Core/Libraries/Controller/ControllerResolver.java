@@ -86,6 +86,9 @@ public class ControllerResolver {
         HttpResponseObject response = new HttpResponseObject();
         response.result = returnValue;
         response.status = ((Response) this._response.get(this._childInstance)).status();
+        if (response.result instanceof Exception) {
+            return ((Exception)response.result).getLocalizedMessage();
+        }
         return JsonSerializer.toJson(response);
     }
 }
