@@ -7,15 +7,19 @@ import static spark.Spark.*;
 public class Entry {
 
     public static void main(String[] args) {
-        try {
-            DomParser parser = new DomParser();
-            parser.parseAsync();
-        }
-        catch (URISyntaxException ex) {
-            // Todo: Would probably send notification to admin that there is an issue with the parser
-        }
         AppServer.init();
         Route.resolve();
         awaitInitialization();
+        try {
+            DomParser content = new DomParser()
+                    .parseAsync();
+            content.initIndexing().saveIndexedContent();
+        }
+        catch (URISyntaxException ex) {
+            // Todo: Required Logging
+        }
+        catch (Exception ex) {
+            // Todo: Required logging here
+        }
     }
 }
