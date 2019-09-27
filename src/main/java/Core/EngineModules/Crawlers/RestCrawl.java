@@ -13,8 +13,10 @@ public class RestCrawl {
     private List<URI> _intranetDocuments = Arrays.asList(
             new URI("https://www.grantham.edu/"),
             new URI("https://www.grantham.edu/degree-type/masters-programs/"),
+            new URI("https://www.iupui.edu/about/index.html"),
             new URI("https://www.grantham.edu/online-degrees/"),
             new URI("https://www.grantham.edu/graduation/"),
+            new URI("https://www.ivytech.edu/about/index.html"),
             new URI("https://www.grantham.edu/about-grantham/"),
             new URI("https://www.grantham.edu/online-college-tuition/"),
             new URI("http://www.promoplace.com/granthamgear/"),
