@@ -61,6 +61,7 @@ public class DomParser {
             String htmlContent = (String) item.getValue();
             Document dom = Jsoup.parse(htmlContent);
             Element documentBody = dom.body();
+            documentBody.prepend(String.valueOf(dom.head()));
             for(Element element: documentBody.children()) {
                 this._makeDocumentNode(element, sourceUrl);
             }
