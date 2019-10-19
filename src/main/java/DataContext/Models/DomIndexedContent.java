@@ -16,6 +16,7 @@ public class DomIndexedContent {
         this.links = new HashSet<>();
         this.images = new HashSet<>();
         this.contents = new HashSet<>();
+        this.searchHitCount = 0;
     }
 
     public HashSet<String> images;
@@ -25,5 +26,7 @@ public class DomIndexedContent {
     public HashSet<String> contents;
 
     public String url;
+
+    public int searchHitCount;
 
 }
