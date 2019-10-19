@@ -23,7 +23,7 @@ public class Route {
      * })
      */
     public static void resolve() {
-        get("/test", (request, response) -> {
+        get("/search", (request, response) -> {
             return Route.resolver.find("SearchController")
                     .invoke("Search",request,response);
         });
