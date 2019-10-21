@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="search-content">
+
+        <div class="logo-name">
+          <span class="color-red">N</span>
+          <span class="color-blue">A</span>
+          <span class="color-yellow">I</span>
+          <span class="color-violet">J</span>
+          <span class="color-green">A</span>
+          <span>G</span>
+          <span class="color-red">L</span>
+          <span class="color-blue">A</span>
+          <span class="color-yellow">S</span>
+          <span class="color-violet">S</span>
+          <span  class="color-green">E</span>
+          <span class="color-red">S</span>
+        </div>
+
+      </div>
+      <div class="text-center input-element">
+          <form [formGroup]="_searchForm" (ngSubmit)="search()">
+              <input type="text" pInputText formControlName="keyword" />
+          </form>
+          
+      </div>
+
+    </div>
+  </div>
+</div>

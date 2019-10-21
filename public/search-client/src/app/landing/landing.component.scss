@@ -1,0 +1,43 @@
+.logo-name  {
+    font-size: 3.0rem;
+}
+
+.search-content {
+    display: grid;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    margin-top: 20%;
+}
+
+input {
+    width: 100%;
+    border-radius: 0.8em;
+}
+
+.input-element {
+    padding-top: 40px;
+    padding-left: 160px;
+    padding-right: 160px;
+}
+
+.color-red {
+    color: #A92B4F;
+}
+
+.color-blue {
+    color: #0E7A7F;
+}
+
+.color-yellow {
+    color: #ADB70D;
+}
+
+.color-violet {
+    color: #0B1875;
+}
+
+.color-green {
+    color: #0B7524;
+}
