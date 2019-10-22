@@ -1,9 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <div class="search-content">
 
-        <div class="logo-name">
+        <div class="logo-name text-center">
           <span class="color-red">N</span>
           <span class="color-blue">A</span>
           <span class="color-yellow">I</span>
@@ -18,12 +17,10 @@
           <span class="color-red">S</span>
         </div>
 
-      </div>
-      <div class="text-center input-element">
+      <div class="text-center">
           <form [formGroup]="_searchForm" (ngSubmit)="search()">
               <input type="text" pInputText formControlName="keyword" />
           </form>
-          
       </div>
 
     </div>

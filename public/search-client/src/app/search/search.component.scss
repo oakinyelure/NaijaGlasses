@@ -1,0 +1,69 @@
+
+
+.color-red {
+    color: #A92B4F;
+}
+
+.color-blue {
+    color: #0E7A7F;
+}
+
+.color-yellow {
+    color: #ADB70D;
+}
+
+.color-violet {
+    color: #0B1875;
+}
+
+.color-green {
+    color: #0B7524;
+}
+
+.logo-name  {
+    font-size: 1.5rem;
+    display: inline-flex;
+}
+
+.container-fluid {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.header {
+    margin: 0;
+    padding: 20px;
+    -webkit-box-shadow: 0px 2px 7px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 7px -1px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 7px -1px rgba(0,0,0,0.75);    
+}
+
+.search-form {
+    padding-left: 20px;
+    width: 100%;
+}
+
+.search-form form input {
+    width: 40vw;
+    border-radius: 0.8em;
+}
+
+.search-content {
+    padding: 20px;
+}
+
+.search-result {
+    padding: 15px;
+}
+
+.result-title {
+    font-size: 1.5rem;
+    width: 70vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.result-description {
+    font-size: 1.0rem;
+}

@@ -1,7 +1,14 @@
 package Core.EngineModules.Crawlers;
 
+import DataContext.Exceptions.MongoEntityException;
+import DataContext.Models.DomLink;
+import DataContext.Mongo;
+import dev.morphia.Datastore;
+import dev.morphia.query.FindOptions;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -10,28 +17,17 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 public class RestCrawl {
-    private List<URI> _intranetDocuments = Arrays.asList(
-            new URI("https://www.grantham.edu/"),
-            new URI("https://www.grantham.edu/degree-type/masters-programs/"),
-            new URI("https://www.iupui.edu/about/index.html"),
-            new URI("https://www.grantham.edu/online-degrees/"),
-            new URI("https://www.grantham.edu/graduation/"),
-            new URI("https://www.ivytech.edu/about/index.html"),
-            new URI("https://www.grantham.edu/about-grantham/"),
-            new URI("https://www.grantham.edu/online-college-tuition/"),
-            new URI("http://www.promoplace.com/granthamgear/"),
-            new URI("https://www.grantham.edu/contact-us/"),
-            new URI("https://www.grantham.edu/blog/"),
-            new URI("https://www.grantham.edu/faqs/")
-    );
+    private HashSet<URI> _intranetDocuments;
 
     private HashMap _crawlResults;
 
     private HttpClient _http;
 
-    public RestCrawl() throws URISyntaxException {
+    public RestCrawl() throws URISyntaxException, MongoEntityException {
         this._http = HttpClient.newHttpClient();
         this._crawlResults = new HashMap();
+        this._intranetDocuments = new HashSet<URI>();
+        this._setDocumentsToCrawl();
     }
 
     public RestCrawl initAsync() {
@@ -58,5 +54,14 @@ public class RestCrawl {
 
     public Map getCrawlResults() {
         return this._crawlResults;
+    }
+
+    private void _setDocumentsToCrawl() throws MongoEntityException, URISyntaxException {
+        Mongo mongo = new Mongo("naija_glasses_db");
+        Datastore orm = mongo.getOrmInstance();
+        List<DomLink> storedLinks = orm.createQuery(DomLink.class).asList(new FindOptions().limit(1000));
+        for(DomLink link : storedLinks) {
+            this._intranetDocuments.add(new URI(link.Link));
+        }
     }
 }

@@ -3,7 +3,9 @@ package Core.EngineModules.Dom;
 import Core.EngineModules.Crawlers.RestCrawl;
 import DataContext.Exceptions.MongoEntityException;
 import DataContext.Models.DomIndexedContent;
+import DataContext.Models.DomLink;
 import DataContext.Mongo;
+import dev.morphia.Datastore;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,7 +21,7 @@ public class DomParser {
 
     private Map<String, DomIndexedContent> _indexedContent;
 
-    public DomParser() throws URISyntaxException {
+    public DomParser() throws URISyntaxException, MongoEntityException {
         this._crawler = new RestCrawl();
         this._webContentNodes = new ArrayList<DomNode>();
         this._indexedContent = new HashMap<String, DomIndexedContent>();
@@ -36,6 +38,9 @@ public class DomParser {
             }
             if(element.hasAttr("href")) {
                 nodeContent.setOuterLink(element.attr("href"));
+            }
+            if(element.tagName() == "title") {
+                nodeContent.setTitle(element.text());
             }
             nodeContent.setTextContent(element.text());
             nodeContent.setUrl(sourceUrl);
@@ -74,6 +79,7 @@ public class DomParser {
     }
 
     public DomParser initIndexing() throws Exception {
+        List<DomLink> validLinks = new ArrayList<>();
         for(DomNode node: this._webContentNodes) {
             if(node.getUrl() != null && node.getTextContent() != null && !node.getTextContent().isEmpty()) {
                 DomIndexedContent content = new DomIndexedContent();
@@ -82,9 +88,16 @@ public class DomParser {
                 }
                 if(node.getOuterLink() != null) {
                     content.links.add(node.getOuterLink());
+                    if(node.getOuterLink().startsWith("http") || node.getOuterLink().startsWith("https")) {
+                        DomLink newLink = new DomLink();
+                        newLink.Link = node.getOuterLink();
+                        newLink.parentSite = node.getUrl();
+                        validLinks.add(newLink);
+                    }
                 }
                 content.contents.add(node.getTextContent());
                 content.url = node.getUrl();
+                content.title = node.getTitle();
 
                 if(this._indexedContent.containsKey(node.getUrl())) {
                     DomIndexedContent existingInstance = this._indexedContent.get(node.getUrl());
@@ -98,7 +111,18 @@ public class DomParser {
                 }
             }
         }
+
+        if(validLinks.size() > 0) {
+            this.saveIndexedLink(validLinks);
+        }
         return this;
+    }
+
+    private void saveIndexedLink(List<DomLink> links) throws Exception {
+        Mongo mongo = new Mongo("naija_glasses_db");
+        Datastore orm = mongo.getOrmInstance();
+        orm.delete(orm.createQuery(DomLink.class));
+        orm.save(links);
     }
 
     public void saveIndexedContent() throws Exception {

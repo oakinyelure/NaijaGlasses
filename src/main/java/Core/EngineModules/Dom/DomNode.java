@@ -11,7 +11,7 @@ public class DomNode {
 
     private String _url;
 
-    private int _searchCount;
+    private String _title;
 
     public DomNode() {
     }
@@ -44,14 +44,6 @@ public class DomNode {
         this._url = _url;
     }
 
-    public int getSearchCount() {
-        return _searchCount;
-    }
-
-    public void setSearchCount(int _searchCount) {
-        this._searchCount = _searchCount;
-    }
-
     public void setTextContent(String _textContent) {
         this._textContent = _textContent;
     }
@@ -62,6 +54,14 @@ public class DomNode {
 
     public void setImageLink(String _imageLink) {
         this._imageLink = _imageLink;
+    }
+
+    public String getTitle() {
+        return _title;
+    }
+
+    public void setTitle(String title) {
+        this._title = title;
     }
 
     @Override

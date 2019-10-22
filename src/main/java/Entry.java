@@ -7,8 +7,10 @@ import static spark.Spark.*;
 public class Entry {
 
     public static void main(String[] args) {
+
         AppServer.init();
         Route.resolve();
+        AppServer.enableCORS("*","*","*");
         awaitInitialization();
         try {
             DomParser content = new DomParser()

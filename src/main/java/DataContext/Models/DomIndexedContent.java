@@ -27,6 +27,8 @@ public class DomIndexedContent {
 
     public String url;
 
+    public String title;
+
     public int searchHitCount;
 
 }

@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="header">
+        <div class="logo-name">
+          <span class="color-red">N</span>
+          <span class="color-blue">A</span>
+          <span class="color-yellow">I</span>
+          <span class="color-violet">J</span>
+          <span class="color-green">A</span>
+          <span>G</span>
+          <span class="color-red">L</span>
+          <span class="color-blue">A</span>
+          <span class="color-yellow">S</span>
+          <span class="color-violet">S</span>
+          <span  class="color-green">E</span>
+          <span class="color-red">S</span>
+
+          <span class="search-form">
+              <form [formGroup]="_searchForm" (ngSubmit)="_mountQueryParam()">
+                  <input type="text" pInputText formControlName="keyword" />
+              </form>
+          </span>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-sm">
+
+        <div class="search-content">
+            <ng-template #SearchResult ngFor let-result [ngForOf]="_searchResults">
+              <div class="search-result">
+                  <div class="font-weight-bold result-title">
+                      {{result.title}}
+                  </div>
+                  <div class="link">
+                    <a [href]="result.url" target="_blank">{{result.url}}</a>
+                  </div>
+                  <div class="result-description">
+                    {{result.possibleSearchContent | slice: 0:400}}
+                  </div>
+              </div>
+
+            </ng-template>
+            
+          </div>
+
+    </div>
+  </div>
+</div>
