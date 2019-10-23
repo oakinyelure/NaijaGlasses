@@ -12,5 +12,5 @@ public class DomLink {
     private ObjectId linkId;
 
     public String parentSite;
-    public String Link;
+    public String link;
 }
