@@ -61,9 +61,9 @@ public class DomParser {
     public DomParser parseAsync() {
         this._crawler.initAsync();
         Map<String,String> resultSet = this._crawler.getCrawlResults();
-        for(Map.Entry item: resultSet.entrySet()) {
-            String sourceUrl = (String) item.getKey();
-            String htmlContent = (String) item.getValue();
+        for(Map.Entry<String, String> item: resultSet.entrySet()) {
+            String sourceUrl = item.getKey();
+            String htmlContent = item.getValue();
             Document dom = Jsoup.parse(htmlContent);
             Element documentBody = dom.body();
             documentBody.prepend(String.valueOf(dom.head()));
@@ -79,7 +79,7 @@ public class DomParser {
     }
 
     public DomParser initIndexing() throws Exception {
-        List<DomLink> validLinks = new ArrayList<>();
+        HashSet<DomLink> validLinks = new HashSet<>();
         for(DomNode node: this._webContentNodes) {
             if(node.getUrl() != null && node.getTextContent() != null && !node.getTextContent().isEmpty()) {
                 DomIndexedContent content = new DomIndexedContent();
@@ -87,11 +87,11 @@ public class DomParser {
                     content.images.add(node.getImageLink());
                 }
                 if(node.getOuterLink() != null) {
-                    content.links.add(node.getOuterLink());
+                    content.links.add(node.getOuterLink().replace("\"","").replace(" ","").trim());
                     if(node.getOuterLink().startsWith("http") || node.getOuterLink().startsWith("https")) {
                         DomLink newLink = new DomLink();
-                        newLink.Link = node.getOuterLink();
-                        newLink.parentSite = node.getUrl();
+                        newLink.link = node.getOuterLink().replace("\"","").replace(" ","").trim();
+                        newLink.parentSite = node.getUrl().replace("\"","").replace(" ","").trim();
                         validLinks.add(newLink);
                     }
                 }
@@ -118,9 +118,11 @@ public class DomParser {
         return this;
     }
 
-    private void saveIndexedLink(List<DomLink> links) throws Exception {
+    private void saveIndexedLink(HashSet<DomLink> links) throws Exception {
         Mongo mongo = new Mongo("naija_glasses_db");
         Datastore orm = mongo.getOrmInstance();
+        List<DomLink> existingLinks = orm.createQuery(DomLink.class).find().toList();
+        links.addAll(existingLinks);
         orm.delete(orm.createQuery(DomLink.class));
         orm.save(links);
     }
